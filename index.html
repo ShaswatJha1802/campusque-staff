@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusQueue — Shopkeeper Queue Dashboard</title>
+  <meta name="description" content="Shopkeeper queue management dashboard for college print shop.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="staff-page">
+
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">CampusQueue <span class="brand-portal-tag">Staff Portal</span></span>
+          <span class="brand-sub" id="navShopName">College Print Hub</span>
+        </div>
+      </div>
+
+      <div class="staff-top-stats">
+        <span class="staff-badge">
+          <span data-i18n="col_received">Active Queue</span>: <strong id="pendingCountBadge">0</strong>
+        </span>
+      </div>
+
+      <div class="nav-controls">
+        <button id="btnOpenSettings" type="button" class="btn btn-outline btn-sm">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span data-i18n="btn_rates_settings">Rates & UPI</span>
+        </button>
+
+        <button id="btnResetDemo" type="button" class="btn btn-outline btn-sm" title="Reload default sample orders">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          <span data-i18n="btn_reset_demo">Reset Demo</span>
+        </button>
+
+        <div class="lang-select-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <select id="langSelect" class="lang-select" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode">
+          <svg id="themeIconSun" class="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="themeIconMoon" class="theme-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="staff-container">
+
+      <div class="staff-header">
+        <div>
+          <h1 class="staff-title" data-i18n="staff_title">Print Queue Management</h1>
+          <p class="staff-subtitle" data-i18n="staff_sub">Live orders in queue. Click buttons on any card to update stages or cancel.</p>
+        </div>
+      </div>
+
+      <div class="kanban-board">
+
+        <div class="kanban-column" id="colReceived">
+          <div class="column-header col-header-received">
+            <div class="col-title-wrap">
+              <span class="status-dot dot-received"></span>
+              <h3 class="column-title" data-i18n="col_received">Received</h3>
+            </div>
+            <span class="column-count" id="countReceived">0</span>
+          </div>
+          <div class="column-cards" id="cardsReceived">
+          </div>
+        </div>
+
+        <div class="kanban-column" id="colPrinting">
+          <div class="column-header col-header-printing">
+            <div class="col-title-wrap">
+              <span class="status-dot dot-printing"></span>
+              <h3 class="column-title" data-i18n="col_printing">Printing</h3>
+            </div>
+            <span class="column-count" id="countPrinting">0</span>
+          </div>
+          <div class="column-cards" id="cardsPrinting">
+          </div>
+        </div>
+
+        <div class="kanban-column" id="colReady">
+          <div class="column-header col-header-ready">
+            <div class="col-title-wrap">
+              <span class="status-dot dot-ready"></span>
+              <h3 class="column-title" data-i18n="col_ready">Ready for Pickup</h3>
+            </div>
+            <span class="column-count" id="countReady">0</span>
+          </div>
+          <div class="column-cards" id="cardsReady">
+          </div>
+        </div>
+
+        <div class="kanban-column" id="colCompleted">
+          <div class="column-header col-header-completed">
+            <div class="col-title-wrap">
+              <span class="status-dot dot-completed"></span>
+              <h3 class="column-title" data-i18n="col_completed">Completed</h3>
+            </div>
+            <span class="column-count" id="countCompleted">0</span>
+          </div>
+          <div class="column-cards" id="cardsCompleted">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <dialog id="settingsModal" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" data-i18n="modal_title">Shop Rates & UPI Configuration</h2>
+        <button type="button" class="btn-close" id="btnCloseSettingsModal" aria-label="Close">✕</button>
+      </div>
+
+      <form id="settingsForm">
+        <div class="form-group">
+          <label for="settingShopName" class="form-label" data-i18n="setting_name">Print Shop Name</label>
+          <input type="text" id="settingShopName" class="form-control" placeholder="e.g. Campus Print Hub" required>
+        </div>
+
+        <div class="form-group">
+          <label for="settingUpiId" class="form-label" data-i18n="setting_upi">Shopkeeper UPI ID</label>
+          <input type="text" id="settingUpiId" class="form-control" placeholder="e.g. campusprints@upi" required>
+          <small class="form-hint" data-i18n="setting_upi_hint">Used to dynamically generate students' payment QR code.</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label for="settingBwRate" class="form-label" data-i18n="setting_bw">B&W Rate (₹ / page)</label>
+            <input type="number" id="settingBwRate" class="form-control" min="0.5" step="0.5" required>
+          </div>
+          <div class="form-group col-half">
+            <label for="settingColorRate" class="form-label" data-i18n="setting_color">Colour Rate (₹ / page)</label>
+            <input type="number" id="settingColorRate" class="form-control" min="1" step="1" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label for="settingStapleRate" class="form-label" data-i18n="setting_staple">Stapling Fee (₹ / set)</label>
+            <input type="number" id="settingStapleRate" class="form-control" min="0" step="1" required>
+          </div>
+          <div class="form-group col-half">
+            <label for="settingSpiralRate" class="form-label" data-i18n="setting_spiral">Spiral Fee (₹ / set)</label>
+            <input type="number" id="settingSpiralRate" class="form-control" min="0" step="1" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelSettings" data-i18n="btn_cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-i18n="btn_save_rates">Save Rates</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
